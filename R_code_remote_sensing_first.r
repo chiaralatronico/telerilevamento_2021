@@ -26,3 +26,71 @@ plot(p224r63_2011, col=cl)
 #nuovo cambio di colori e nuova stampa
 cl <- colorRampPalette(c("red","pink","purple")) (100)
 plot(p224r63_2011, col=cl)
+
+# Bande Landsat
+# B1: blu
+# B2: verde
+# B3: rosso
+# B4: infrarosso vicino
+# B5: infrarosso medio
+# B6: infrarosso termico
+# B7: infrarosso medio
+
+#dev.off() per ripulire la finestra grafica
+dev.off()
+
+#voglio plottare solo la banda 1. Con $ lego la banda 1 all'immagine satellitare totale
+plot(p224r63_2011$B1_sre)
+
+#nuovo plot della banda 1 con nuovi colori
+cl <- colorRampPalette(c("grey", "yellow", "blue", "orange")) (100)
+plot(p224r63_2011$B1_sre, col=cl)
+
+#pulisco la finestra grafica
+dev.off()
+
+#Con par chiedo ad essere di impostare una certa configurazione grafica che specifico con mfrow 
+par(mfrow=c(1,2))
+#lancio i plot
+plot(p224r63_2011$B1_sre)
+plot(p224r63_2011$B2_sre)
+
+#plot delle prime 4 bande Landsat sistemate su 4 righe e 1 colonna
+par(mfrow=c(4,1))
+plot(p224r63_2011$B1_sre)
+plot(p224r63_2011$B2_sre)
+plot(p224r63_2011$B3_sre)
+plot(p224r63_2011$B4_sre)
+
+#2 righe e 2 colonne
+par(mfrow=c(2,2))
+plot(p224r63_2011$B1_sre)
+plot(p224r63_2011$B2_sre)
+plot(p224r63_2011$B3_sre)
+plot(p224r63_2011$B4_sre)
+
+#associo una plette di colori che richiama il colore della lunghezza d'onda di ogni banda
+par(mfrow=c(2,2))
+clb<-colorRampPalette(c("dark blue","blue","light blue")) (100)
+plot(p224r63_2011$B1_sre, col=clb)
+
+clg<-colorRampPalette(c("dark green","green","light green")) (100)
+plot(p224r63_2011$B2_sre, col= clg)
+
+clr<-colorRampPalette(c("dark red","red","pink")) (100)
+plot(p224r63_2011$B3_sre, col=clr)
+
+cln<-colorRampPalette(c("green","yellow","blue")) (100)
+plot(p224r63_2011$B3_sre, col=cln)
+
+
+
+
+
+
+
+
+
+
+
+
