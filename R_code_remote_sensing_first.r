@@ -92,16 +92,16 @@ plot(p224r63_2011$B3_sre, col=cln)
 # B6: infrarosso termico
 # B7: infrarosso medio
 
-#plot in RGB con uno strech lineare
+#plot dell'immagine della riserva brasiliana in RGB (colori reali) con uno strech lineare
 plotRGB(p224r63_2011, r=3, g=2, b=1, stretch="Lin")
 
 #visualizzo l'immagine in infrarosso montandolo sulla banda del rosso
 plotRGB(p224r63_2011, r=4, g=3, b=2, stretch="Lin")
 
-#sposto la banda 4 dell'infrarosso sulla componenete della del verde
+#sposto la banda 4 dell'infrarosso sulla banda del verde. 
 plotRGB(p224r63_2011, r=3, g=4, b=2, stretch="Lin")
 
-#sposto la banda dell'infrarosso sulla componente blu 
+#sposto la banda dell'infrarosso sulla banda blu 
 plotRGB(p224r63_2011, r=3, g=2, b=4, stretch="Lin")
 
 #multiframe 2x2 con le precedenti 4 immagini
@@ -111,7 +111,7 @@ plotRGB(p224r63_2011, r=4, g=3, b=2, stretch="Lin")
 plotRGB(p224r63_2011, r=3, g=4, b=2, stretch="Lin")
 plotRGB(p224r63_2011, r=3, g=2, b=4, stretch="Lin")
 
-#esporto le immagini in pdf nella cartella lab
+#esporto il multiframe in pdf nella cartella lab e chiudo la finestra
 pdf("prova_pdf.pdf")
 par(mfrow=c(2,2))
 plotRGB(p224r63_2011, r=3, g=2, b=1, stretch="Lin")
@@ -120,10 +120,10 @@ plotRGB(p224r63_2011, r=3, g=4, b=2, stretch="Lin")
 plotRGB(p224r63_2011, r=3, g=2, b=4, stretch="Lin")
 dev.off()
 
-#stretch a istogramma
+#plot dell'immagine con infrarosso sulla banda del verde e stretch a istogramma
 plotRGB(p224r63_2011, r=3, g=4, b=2, stretch="hist")
 
-#multiframe 3x1 con le tre immagini in colori naturali RGB e con la banda dell'infrarosso sul verde sia con stretch lineare che con stretch a istogramma
+#multiframe 3x1 con tre immagini: in colori naturali RGB, con la banda dell'infrarosso sul verde con stretch lineare e con stretch a istogramma
 par(mfrow=c(3,1))
 plotRGB(p224r63_2011, r=3, g=2, b=1, stretch="Lin")
 plotRGB(p224r63_2011, r=3, g=4, b=2, stretch="Lin")
@@ -132,6 +132,8 @@ plotRGB(p224r63_2011, r=3, g=4, b=2, stretch="hist")
 #installo il pacchetto RStoolbox
 install.packages("RStoolbox")
 
+#installo il pacchetto ggplot2
+install.packages("ggplot2")
 
 
 
