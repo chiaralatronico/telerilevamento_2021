@@ -129,11 +129,38 @@ plotRGB(p224r63_2011, r=3, g=2, b=1, stretch="Lin")
 plotRGB(p224r63_2011, r=3, g=4, b=2, stretch="Lin")
 plotRGB(p224r63_2011, r=3, g=4, b=2, stretch="hist")
 
-#installo il pacchetto RStoolbox
-install.packages("RStoolbox")
 
-#installo il pacchetto ggplot2
-install.packages("ggplot2")
+#importo in R il blocco di immagini relative al 1998 e gli associo il nome p224r63_1988
+p224r63_1988 <- brick ("p224r63_1988_masked.grd")
+
+#info sul nuovo file
+p224r63_1988
+
+#plot del nuovo file nelle singole 7 bande
+plot(p224r63_1988)
+
+#plot in RGB dell'immagine a colori naturali
+plotRGB(p224r63_1988, r=3, g=2, b=1, stretch="Lin")
+
+#plot dell'immagine in RGB in falsi colori (con la banda del NIR montata sulla componente del Red)
+plotRGB(p224r63_1988, r=4, g=3, b=2, stretch="Lin")
+
+#multiframe RGB a colori naturali delle due immagini del 1988 e del 2011
+par(mfrow=c(1,2))
+plotRGB(p224r63_1988, r=3, g=2, b=1, stretch="Lin")
+plotRGB(p224r63_2011, r=3, g=2, b=1, stretch="Lin")
+
+#pdf di un multiframe 2x2 in falsi colori (NIR sulla componente Red) delle immagini del 1988 e 2011 con stretch lineare e ad istogramma
+pdf("multitemp.pdf")
+par(mfrow=c(2,2))
+plotRGB(p224r63_1988, r=4, g=3, b=2, stretch="Lin")
+plotRGB(p224r63_2011, r=4, g=3, b=2, stretch="Lin")
+plotRGB(p224r63_1988, r=4, g=3, b=2, stretch="hist")
+plotRGB(p224r63_2011, r=4, g=3, b=2, stretch="hist")
+dev.off()
+
+
+
 
 
 
