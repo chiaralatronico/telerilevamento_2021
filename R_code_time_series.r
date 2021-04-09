@@ -8,4 +8,6 @@ library(raster)
 #specifico il nuovo percorso di salvataggio dei dati
 setwd("D:/lab/Greenland")
 
+#installo il pacchetto rasterVis
+install.packages("rasterVis")
 
