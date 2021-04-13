@@ -11,6 +11,9 @@ setwd("D:/lab/Greenland")
 #installo il pacchetto rasterVis
 install.packages("rasterVis")
 
+#richiamo il pacchetto rasterVis
+library(rasterVis)
+
 #utilizzo la funzione raster per importare singolarmente le immagini lst relative a vari anni 
 lst_2000 <- raster ("lst_2000.tif")
 
@@ -42,17 +45,37 @@ rlist
 import <- lapply(rlist, raster)
 import
 
-#utilizzo la funzione stack per creare il pacchetto delle 4 immagini che chiamo Tgr
-Tgr <- stack(import)
+#utilizzo la funzione stack per creare il pacchetto delle 4 immagini che chiamo TGr
+TGr <- stack(import)
 
 #lancio il plot del pacchetto per visualizzare contemporaneamente tutte e 4 le immagini
-plot(Tgr)
+plot(TGr)
 
 #eseguo un plot RGB del pacchetto TGr a cui associo al livello del Red l'imm. del 2000, al livello del Green l'imm. del 2005 ed al Blue l'imm. del 2010
 plotRGB(TGr, 1, 2, 3, stretch="Lin")
 
 #plotRGB con le immagini del 2005, 2010 e 2015 nei rispettivi livelli Red, Green e Blue
 plotRGB(TGr, 2, 3, 4, stretch="Lin")
+
+#utilizzo la funzione levelplot per fare il plot delle 4 immagini con un'unica legenda
+levelplot(TGr)
+
+#riapplico la funzione levelplot al blocco di immagini TGr per visualizzare solo quella relativa al 2000
+levelplot(TGr$lst_2000)
+
+#nuova palette di colori
+cl<-colorRampPalette(c("blue","light blue","pink","red")) (100)
+
+#ri-plotto le 4 immagini TGr con i nuovi colori utilizzando la funzione levelplot con l'argomento col.regions
+levelplot(TGr, col.regions=cl)
+
+#rinomino le 4 immagini (attributi) con la funzione levelplot e l'argomento names.attr
+levelplot(TGr, col.regions=cl, names.attr=c("July 2000, "July 2005", "July 2010", "July 2015"))
+
+
+
+
+
 
 
 
