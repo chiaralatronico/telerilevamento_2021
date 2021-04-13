@@ -69,8 +69,55 @@ cl<-colorRampPalette(c("blue","light blue","pink","red")) (100)
 #ri-plotto le 4 immagini TGr con i nuovi colori utilizzando la funzione levelplot con l'argomento col.regions
 levelplot(TGr, col.regions=cl)
 
-#rinomino le 4 immagini (attributi) con la funzione levelplot e l'argomento names.attr
-levelplot(TGr, col.regions=cl, names.attr=c("July 2000, "July 2005", "July 2010", "July 2015"))
+#rinomino le 4 immagini (attributi) con la funzione levelplot e l'argomento names.attr 
+levelplot(TGr, col.regions=cl, names.attr=c("July 2000", "July 2005", "July 2010", "July 2015"))
+
+#inserisco anche un titolo alla mappa con l'argomento main
+levelplot(TGr, col.regions=cl, main="LST variation in time", names.attr=c("July 2000", "July 2005", "July 2010", "July 2015"))
+
+
+
+#nuova analisi sullo scioglimento del ghiaccio in Groenlandia
+
+#faccio una lista delle immagini dal 1979 al 2007 relative allo scioglimento del ghiaccio
+meltlist<-list.files(pattern="melt")
+
+#importo la lista creata con lapply e le applico la funzione raster
+melt_import<-lapply(meltlist, raster)
+
+#raggruppo i file importati con la funzione stack
+melt<-stack(melt_import)
+
+#visualizzo i valori, le info, di melt 
+melt
+
+#faccio un plot delle immagini
+levelplot(melt)
+
+#per capire l'avanzamento dello scioglimento del ghiaccio faccio una differenza algebrica tra l'immagine del 2007 (maggior scioglimento) e quella del 1979 (minor scioglim.)
+melt_amount<-melt$X2007annual_melt-melt$X1979annual_melt
+
+#creo una nuova palette di colori da applicare al melt_amount
+clb<-colorRampPalette(c("blue","white","red")) (100)
+
+#faccio il plot del melt_amount
+plot(melt_amount, col=clb)
+
+#altro plot ma con la funzione levelplot
+levelplot(melt_amount, col.regions=clb)
+
+
+#installo il pacchetto knitr
+install.packages("knitr")
+
+
+
+
+
+
+
+
+
 
 
 
