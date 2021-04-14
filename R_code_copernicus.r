@@ -27,3 +27,9 @@ albedores<-aggregate (albedo, fact=100)
 
 #stampo la nuova immagine ricampionata
 plot(albedores, col=cl)
+
+#installo il pacchetto knitr
+install.packages("knitr")
+
+#installo il pacchetto RStoolbox
+install.packages("RStoolbox")
