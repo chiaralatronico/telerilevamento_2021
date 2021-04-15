@@ -13,13 +13,13 @@ library(raster)
 #specifico il percorso di salvatggio dei dati scaricati
 setwd("D:/lab/")
 
-#importo il file scaricato con la funzione raster e gli associo il nome "albedo"
+#importo il file relativo all'albedo scaricato dal sito (land.copernicus...sezione energy budget) con la funzione raster e gli associo il nome "albedo"
 albedo<-raster("c_gls_ALBH_202006130000_GLOBE_PROBAV_V1.5.1.nc")
 
-#specifico una nuova palette di colori
+#creo una nuova palette di colori
 cl <- colorRampPalette(c('light blue','green','red','yellow'))(100)
 
-#stampo l'albedo con la nuova palette di colori
+#stampo l'immagine con la nuova palette di colori
 plot(albedo, col=cl)
 
 #ricampionamento bilineare: utilizzo la funzione aggregate per ricampionare (diminuiure il numero di pixel) l'immagine; con l'argomento fact specifico tale diminuizione lineare 
