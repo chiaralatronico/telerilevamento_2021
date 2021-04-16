@@ -6,4 +6,5 @@ setwd("D:/lab/")
 #richiamo il pacchetto knitr
 library(knitr)
 
-#
+#utilizzo la funzione stitch
+
