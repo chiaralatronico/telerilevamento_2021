@@ -39,3 +39,34 @@ sunc<-unsuperClass(sun, nClasses=3)
 plot(sunc$map)
 
 
+#download dell'immagine del Grand Canyon da Landsat per la sua riclassificazione secondo la riflettanza
+#importo in R l'immagine
+gc<-brick("dolansprings_oli_2013088_canyon_lrg.jpg")
+
+#plot a colori (lineare) dell'immagine
+plotRGB(gc, r=1, g=2, b=3, stretch="Lin")
+
+#plot a colori (a istogramma) dell'immagine
+plotRGB(gc, r=1, g=2, b=3, stretch="Hist")
+
+#classificazione con due classi
+gcc2<-unsuperClass(gc, nClasses=2)
+
+#stampo l'immagine classificata (solo la mappa)
+plot(gcc2$map)
+
+#nuova classificazione con 4 classi
+gcc4<-unsuperClass(gc, nClasses=4)
+
+#stampo l'immagine classificata (solo la mappa)
+plot(gcc4$map)
+
+
+
+
+
+
+
+
+
+
