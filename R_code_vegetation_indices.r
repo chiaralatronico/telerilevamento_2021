@@ -77,3 +77,28 @@ plot(vi2, col=cl)
 #calcolo e stampo la differenza tra i due indici normalizzati
 difndvi<-ndvi1-ndvi2
 plot(difndvi, col=cld)
+
+
+#worlwide NDVI
+
+#installo il pacchetto raster rasterdiv per visualizzare una serie di indici a scala globale.
+#il set di dati di input è il raster copNDVI (Copernicus Long Term) che ha per ogni pixel l'NDVI medio globale calcolato il 21 giugno tra 1999-2007
+install.packages("rasterdiv")
+
+#richiamo il pacchetto rasterdiv
+library(rasterdiv)
+
+#stampo l'immagine di scala globale
+plot(copNDVI)
+
+#con la funzione "reclassify" e l'argomento "cbind" cambio i pixel 253, 254 e 255 relativi all'acqua per essere trasformati in "non-valori" (NA)
+#sovrascrivo così il raster copNDVI e lo stampo
+copNDVI<-reclassify(copNDVI, cbind(253:255, NA))
+plot(copNDVI)
+
+#richiamo il pacchetto rastervis
+library(rastervis)
+
+#stampo l'immagine copNDVI con il level plot per capire l'andamento medio dell'indice a scala longitudinale e latitudinale
+levelplot(copNDVI)
+
