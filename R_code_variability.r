@@ -66,4 +66,4 @@ plot(sentpca$map)
 sentpca
 
 summary(sentpca$model)
-
+the first pca contiene il ...
