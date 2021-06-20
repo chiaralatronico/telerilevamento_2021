@@ -82,27 +82,26 @@ library(RStoolbox)
 library(ggplot2)
 library(gridExtra)
 sent<-brick("sentinel.png")
-sent <- brick("sentinel.png")
 sentpca <- rasterPCA(sent)
 plot(sentpca$map)
 sentpca
 summary(sentpca$model) 
-#67.qualcosa% di variabilità spiegato attorno alla prima componente
 
-#focal 
+#chiamo pc1 la prima componente delle mappe
+pc1<-sentpca$map$PC1
 
-sentpca$map
-#la prima componente si chiama pc1
-
-pc1 <- sentpca$map$PC1
+#caclolo la dev. st. (sd) sulla pc1 con una moving window di 5x5
 pc1sd5<-focal(pc1, w=matrix(1/25, nrow=5, ncol=5), fun=sd)
+
+#imposto una nuova palette di colori e plotto l'immagine
 clsd <- colorRampPalette(c('blue','green','pink','magenta','orange','brown','red','yellow'))(100)
 plot(pc1sd5, col=clsd)
+#l'aumento di variabilità è riscontrabile nelle zone di roccia
 
-#su virtuale pezzo di codice 7x7
-#lo salvo in lab in blocknotes con nome source.txt (in realtà va ftto save link as)
-#in r con la funzione source richiamo il codice (carica codici dall'esterno)
-source("source.txt")
+#su virtuale leggo un pezzo di codice per il calcolo della dev.st con una moving window 7x7
+#salvo tale codice nella cartella lab con nome source_test_lezione.r
+#in R con la funzione source richiamo il codice (carica codici dall'esterno)
+source("source_test_lezione.r")
  
 install.packages("viridis")
 library(viridis)
