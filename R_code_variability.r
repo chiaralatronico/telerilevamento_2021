@@ -7,19 +7,20 @@ setwd("D:/lab/")
 library(raster)
 library(RStoolbox)
 
-#importo in R l'immagine Sentinel del Similaun (composta tra 3 livelli: NIR, Red, Green)
+#importo in R l'immagine Sentinel del Similaun (composta tra 3 livelli: NIR è la Banda 1, Red è la Banda 2, Green è la Banda 3)
 sent<-brick("sentinel.png")
 
-#plot dell'immagine in RGB, montando NIR sulla componente Red, Red sulla Green e Green sulla Blue (non serve specificarlo)
+#plot dell'immagine in RGB, montando il NIR sulla componente Red, il Red sulla Green e il Green sulla Blue (non serve specificarlo)
 plotRGB(sent, stretch="lin")
 
-#
+#sposto il NIR sulla componente Green: la vegetazione sarà verde fluo
 plotRGB(sent, r=2, g=1, b=3, stretch="lin")
 
-#per il calcolo della dev.standard posso utilizzare una sola banda
-#si utilizza la "finestra mobile" (moving window) di un'estensione di tot.pixel x tot.pixel in cui calcola la dev.st
+#per il calcolo della dev.standard si utilizza la "finestra mobile" (moving window) di un'estensione di tot.pixel x tot.pixel 
+#essa passa in una sola banda dell'immagine e calcola di volta in volta la dev.st. dei pixel dell'immagine a cui fa riferimento
+#per poterla usare posso calcolare l'ndvi dell'immagine in modo da creare un unico layer su cui calcolare la dev. st.
 
-#associo le bande dell'immagine a degli oggetti
+#rinomino le bande sentinel.1 e sentinel.2 dell'immagine sent
 nir <- sent$sentinel.1
 red <- sent$sentinel.2
 
@@ -35,38 +36,44 @@ cl <- colorRampPalette(c('black','white','red','magenta','green'))(100)
 #nuova stampa 
 plot(ndvi,col=cl)
 
-#utilizzo la funzione focal per calcolare la dev.st.(sd) di una moving window (w) di 3x3 pixel (ndvisd3)
+#con la funzione focal calcolo la dev. st. (sd) sull'ndvi con una finestra mobile di 3x3 pixel (w) 
 ndvisd3 <- focal(ndvi, w=matrix(1/9, nrow=3, ncol=3), fun=sd)
 plot(ndvisd3)
 
-clsd <- colorRampPalette(c('blue','green','pink','magenta','orange','brown','red','yellow'))(100) #
+#cambio la palette di colori
+clsd <- colorRampPalette(c('blue','green','pink','magenta','orange','brown','red','yellow'))(100) 
 plot(ndvisd3, col=clsd)
-#rosso e giallo dev.st più alta. verde e blu dev.st. più bassa. nelle parti più omogee della roccia nuda (blu) bassa. verde dal nuda a vegetata. omogena nelle parti vegetate
- 
-#calcolo la media
+#rosso e giallo dev.st più alta. Verde e blu dev.st. più bassa. 
+#La dev.st. in blu è molto bassa nelle parti più omogenee della roccia nuda, mentre aumenta ed è più verde verde dalla roccia nuda alle aree vegetate. 
+#è omogenea nelle parti vegetate 
+
+#calcolo la media (è la media della biomassa all'interno dell'immagine)
 ndvimean3 <- focal(ndvi, w=matrix(1/9, nrow=3, ncol=3), fun=mean)
 
-#plot della  media
+#plot della media
 plot(ndvimean3, col=clsd)
-#l'ndvi medio calcolato porterà a volir moli alti nelle praterie ad alta quaota...
+#l'ndvi medio calcolato porterà a valori moli alti nelle praterie ad alta quaota, alti nei boschi, più bassi nella roccia nuda
 
 #amplio la grandezza della moving window: 13x13 pixels
 ndvisd13 <- focal(ndvi, w=matrix(1/169, nrow=13, ncol=13), fun=sd)
 plot(ndvisd13)
 
+#moving window di 5x5 pixels
 ndvisd5 <- focal(ndvi, w=matrix(1/25, nrow=5, ncol=5), fun=sd)
 clsd <- colorRampPalette(c('blue','green','pink','magenta','orange','brown','red','yellow'))(100)
 plot(ndvisd5, col=clsd)
 
-#analisi multivariata
-#calcolo della pca con la funzione PCA
+#per caclolare la dev. st. su un uncio strato dell'immagine posso anche fare un'analisi multivariata
+#calcolo la PCA con la funzione rasterPCA
 sentpca<-rasterPCA(sent)
+
+#plot delle 4 mappe della sentpca (la prima, la pc1, è quella che per definizione ha maggiori info)
 plot(sentpca$map)
 
-sentpca
-
+#summary del modello della pca per leggere la % di variabilità spiegata dalle singole componenti
 summary(sentpca$model)
-the first pca contiene il ...
+#la pc1 spiega il 67.36% dell'informazione originale
+
 
 
 setwd("D:/lab/")
