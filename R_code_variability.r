@@ -104,38 +104,41 @@ plot(pc1sd5, col=clsd)
 source("source_test_lezione.r")
  
 install.packages("viridis")
-library(viridis)
+library(viridis) #serve per colorare i plot di ggplot in modo automatico
 
-#importo altro codice
+#importo in R un altro codice dall'esterno
 source("source_ggplot.r")
 
-#faccio una nuova finestra vuota (con il + aggiungo dei blocchi)
+#creo una nuova finestra vuota (con il + aggiungo ulteriori comandi)
 ggplot()+
 
-#le estetiche sono cosa plotto (sono le mapping)
+#con la funzione geom_raster specifico qual è l'oggetto del plot (un raster). Con l'arg. mapping specifico le estetiche, cioè che cosa voglio plottare (x, y, ed il layer della mappa)
 geom_raster(pc1sd5, mapping = aes(x = x, y = y, fill = layer))
 
-ggplot() +
-geom_raster(pc1sd5, mapping = aes(x = x, y = y, fill = layer)) +
+#https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html
+#con la funzione scale_fill_viridis() seleziono la scala di colori (in questo caso è quella di default)
+ggplot() + 
+geom_raster(pc1sd5, mapping = aes(x = x, y = y, fill = layer)) + 
 scale_fill_viridis()
 
-#https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html
+#aggiungo un titolo
 p1<-ggplot() +
 geom_raster(pc1sd5, mapping = aes(x = x, y = y, fill = layer)) +
 scale_fill_viridis()  +
 ggtitle("Standard deviation of PC1 by viridis colour scale")
 
+#cambio la scala di colori, scelgo "magma"
 p2<-ggplot() +
 geom_raster(pc1sd5, mapping = aes(x = x, y = y, fill = layer)) +
 scale_fill_viridis(option = "magma")  +
 ggtitle("Standard deviation of PC1 by magma colour scale")
-#vengono fuori molto bene le parti con una alta dev.st
 
+#scala di colori "inferno"
 p3<-ggplot() +
 geom_raster(pc1sd5, mapping = aes(x = x, y = y, fill = layer)) +
 scale_fill_viridis(option = "inferno")  +
 ggtitle("Standard deviation of PC1 by inferno colour scale")
 
-#con grid.arrange metto insieme più mappe di ggplot
-grid.arrange(p1, p2, p3, nrow=3)
-#è il metodo con il quale il prof ci ha passato il codice pieno di mappe
+#con grid.arrange plotto più mappe insieme
+grid.arrange(p1, p2, p3, nrow=1)
+
