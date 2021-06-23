@@ -59,13 +59,13 @@ plot(EN$EN_0013, col=cl)
 #con la funzione rasterPCA "compatto" il pacchetto immagini in un numero minore di bande
 ENpca<-rasterPCA(EN)
 
-#con la funziona summary ottengo un sommario del modello generato dalla funzione rasterPCA
+#con la funzione summary ottengo un sommario del modello generato dalla funzione rasterPCA
 summary(ENpca$model)
 
 #stampo l'immagine 
 plotRGB(ENpca$map, r=1, g=2, b=3, stretch="Lin")
 
-#calcolo la varaibilità locale (dev.st.) sulla prima componente principale
+#calcolo la variabilità locale (dev.st.) sulla prima componente principale
 pc1st<-focal(ENpca$map$PC1, w=matrix(1/9, nrow=3, ncol=3), fun=sd)
 plot(pc1st, col=cl)
 
