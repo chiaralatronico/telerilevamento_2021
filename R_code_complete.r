@@ -17,7 +17,7 @@
 
 #-------------------------------------------------
 
-#1. Remote sensing first code
+# 1. Remote sensing first code
 
 # Il mio primo codice in R per il telerilevamento
 
@@ -185,7 +185,7 @@ dev.off()
 
 #-------------------------------------------------
 
-#2. R code time series
+# 2. R code time series
 
 # Time series analysis
 # Greenland increase of temperature 
@@ -297,7 +297,7 @@ levelplot(melt_amount, col.regions=clb)
 
 #-------------------------------------------------
 
-#3. R code Copernicus data
+# 3. R code Copernicus data
 
 #R_code_copernicus.r
 #Visualizing Copernicus data
@@ -347,7 +347,7 @@ setwd("D:/lab/")
 #richiamo il pacchetto knitr per creare report
 library(knitr)
 
-#edito e copio il codie "time series" sulla Groenlandia, lo incollo su un editor di testi e lo salvo come "R_code_greenland.txt"
+#edito e copio il codie "time series" sulla Groenlandia, lo incollo su un editor di testo e lo salvo come "R_code_greenland.txt"
 
 #utilizzo la funzione stitch per la creazione di report automatici
 stitch("R_code_greenland.txt", template=system.file("misc", "knitr-template.Rnw", package="knitr"))
@@ -367,7 +367,7 @@ stitch("R_code_greenland.txt", template=system.file("misc", "knitr-template.Rnw"
 
 #-------------------------------------------------
 
-#5. R code multivariate analysis
+# 5. R code multivariate analysis
 
 #R_code_multivariate_analysis.r
 
@@ -486,7 +486,7 @@ plot(gcc4$map)
 
 #-------------------------------------------------
 
-#7. R code ggplot2
+# 7. R code ggplot2
 
 #percorso di salvataggio dati
 setwd("D:/lab/")
@@ -805,6 +805,7 @@ summary(sentpca$model)
 #la pc1 spiega il 67.36% dell'informazione originale
 
 
+#Day 2
 
 setwd("D:/lab/")
 library(raster)
