@@ -24,7 +24,10 @@
 #specifico il percorso di salvataggio della cartella lab (per Windows)
 setwd("D:/lab/") 
 
-#inserisco la funzione che richiama il pacchetto raster precedentemente installato con la funzione install.packages("raster")
+#installo il pacchetto raster
+install.packages("raster")
+
+#inserisco la funzione che richiama il pacchetto raster
 library(raster)
 
 #con la funzione birck importo un'unica immagine satellitare contenente tante immagini multi-banda e le associo il nome p224r63_2011
