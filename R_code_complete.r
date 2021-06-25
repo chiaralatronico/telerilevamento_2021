@@ -876,7 +876,7 @@ grid.arrange(p1, p2, p3, nrow=1)
 
 #-------------------------------------------------
 
-# 11. R code scpectral signatures
+# 11. R code spectral signatures
 
 #R_code_spectral_signatures.r
 
@@ -1138,5 +1138,5 @@ labs(x="band",y="reflectance")
 
 
 
-#------------------------------------------------
+
 
