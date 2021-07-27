@@ -34,4 +34,9 @@ plot(ottobre16)
 # B6: (Short Wave Infrared) SWIR 1  [Riflettanza delle vegetazione influenzata dal contenuo d'acqua e stress idrico]
 # B7: SWIR 2  [Discriminazione fra suolo nudo e aree artificiali]
 
-compareRaster(giugno15, ottobre16, extent=TRUE, rowcol=TRUE, crs=TRUE, res=FALSE, orig=FALSE, rotation=TRUE, values=FALSE, stopiffalse=TRUE, showwarning=FALSE)
+#plot delle immagini a colori naturali  #no l'apply: file di estensioni diverse
+par(mfrow=c(2,1))
+plotRGB(giugno15, r=4, g=3, b=2, stretch="lin")
+plotRGB(ottobre16, r=4, g=3, b=2, stretch="lin")
+
+
