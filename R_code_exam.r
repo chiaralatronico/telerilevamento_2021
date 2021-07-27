@@ -25,11 +25,13 @@ ottobre16
 plot(giugno15)
 plot(ottobre16)
 
-#Bande Landsat 8
-# B1: Violet - Deep blue
-# B2: Blue
-# B3: Green
-# B4: Red
-# B5: Near Infrared (NIR)
-# B6: (Short Wave Infrared) SWIR 1 
-# B7: SWIR 2
+#Bande Landsat 8 e funzionalità
+# B1: Violet - Deep blue  [Analisi delle linee di costa]
+# B2: Blue  [Discriminazione fra suolo nudo e vegetazione, e tra conifere e latifoglie]
+# B3: Green  [Riflessione del verde data dallo stato della vegetazione]
+# B4: Red  [Discrimina diverse tipologie vegetazionali]
+# B5: Near Infrared (NIR)  [studi sulla biomassa. Vitalità e stato di salute della vegetetazione]
+# B6: (Short Wave Infrared) SWIR 1  [Riflettanza delle vegetazione influenzata dal contenuo d'acqua e stress idrico]
+# B7: SWIR 2  [Discriminazione fra suolo nudo e aree artificiali]
+
+compareRaster(giugno15, ottobre16, extent=TRUE, rowcol=TRUE, crs=TRUE, res=FALSE, orig=FALSE, rotation=TRUE, values=FALSE, stopiffalse=TRUE, showwarning=FALSE)
