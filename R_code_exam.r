@@ -151,20 +151,17 @@ percentuali
      
 #con la funzione ggplot faccio un grafico (a barre) per l'immagine orlando_1986
 #sull'asse delle x inserisco la voce copertura, mentre su quello delle y percent_1986
-g1 <- ggplot(percentuali, aes(x=copertura, y=percent_1986, color=copertura)) + geom_bar(stat="identity", fill="white")
+g1 <-ggplot(percentuali, aes(x=copertura, y=percent_1986, fill=copertura)) +
+  geom_bar(stat="identity", color="black")
+G1<-g1 +scale_fill_manual(values=c("forest green", "gray", "turquoise"))+theme(legend.position="top")
 
 #grafico con ggplot anche per defor2
-g2<-ggplot(percentuali, aes(x=copertura, y=percent_2014, color=copertura) + geom_bar(stat="identity", fill="white")
+g2 <-ggplot(percentuali, aes(x=copertura, y=percent_2014, fill=copertura)) +
+  geom_bar(stat="identity", color="black")
+G2<-g2 +scale_fill_manual(values=c("forest green", "gray", "turquoise"))+theme(legend.position="top")
 
 #con la funzione grid.arrange stampo insieme i due grafici su una riga
-grid.arrange(g1, g2, nrow=1)
- 
-
-
-
-
-
-
+grid.arrange(G1, G2, nrow=1)
 
 
 
