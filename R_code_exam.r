@@ -202,5 +202,117 @@ plot(ndvimean14, col=clm)
 par(mfrow=c(1,2))
 plot(ndvimean86, col=clm)
 plot(ndvimean14, col=clm)
+---------------------------------
+plotRGB(orlando_1986)
+
+
+#funzione click per creare le firme spettrali. Si clicca sulla mappa per leggere le info relative alla riflettanza
+#T= true; type="p": ogni click viene contrassegnato da un punto
+click(orlando_1986, id=T, xy=T, cell=T, type="p", pch=16, col="yellow")
+
+      #x      y   cell  orlando_tm5_1986108.1  orlando_tm5_1986108.2   orlando_tm5_1986108.3
+#1 469.5  460.5  14150                    189                     53                      73   #area boscata
+      #x      y   cell  orlando_tm5_1986108.1  orlando_tm5_1986108.2   orlando_tm5_1986108.3
+#1 659.5  107.5 268500                    210                     97                     101   #area seminaturale
+
+
+#tabella riassunta sui valori di riflettanza per bande tra foresta ed acqua
+#definisco le variabili (banda, area boscata, area seminaturale)
+banda <- c(1,2,3)
+area_boscata <- c(189, 53, 73) #inserisco i valori di riflettanza
+area_seminaturale <- c(210, 97, 101)
+
+#creo la tab con le tre variabili
+firme_spettrali <- data.frame(banda, area_boscata, area_seminaturale)
+firme_spettrali
+
+   #banda  area_boscata  area_seminaturale
+#1     1            189                210
+#2     2             53                 97
+#3     3             73                101
+
+#plot delle firme spettrali (spectral_signatures) per creare un grafico con le variabili 
+p86<-ggplot(firme_spettrali, aes(x=banda)) + 
+geom_line(aes(y=area_boscata, color="punto 1")) +
+geom_line(aes(y=area_seminaturale, color="punto 2")) +
+scale_color_manual(values=c("#E69F00", "#56B4E9"))+
+theme(legend.position="top")+
+labs(x="banda",y="riflettanza")
+p86
+
+plotRGB(orlando_2014)
+
+click(orlando_2014, id=T, xy=T, cell=T, type="p", pch=16, col="yellow")
+
+       #x     y  cell  orlando_oli_2014137.1  orlando_oli_2014137.2  orlando_oli_2014137.3
+ #1 463.5 454.5 18464                    140                    108                    109  #area urb
+      #x     y   cell  orlando_oli_2014137.1  orlando_oli_2014137.2  orlando_oli_2014137.3
+#1 659.5 107.5 268500                      0                     48                     58  #specchio d'acqua
+                                           
+
+#tabella riassunta sui valori di riflettanza per bande tra foresta ed acqua
+#definisco le variabili (banda, area boscata, area seminaturale)
+banda <- c(1,2,3)
+area_urbanizzata <- c(140, 108, 109) #inserisco i valori di riflettanza
+specchio_acqua <- c(0, 48, 58)
+
+#creo la tab con le tre variabili
+firme_spettrali14<- data.frame(banda, area_urbanizzata, specchio_acqua)
+firme_spettrali14
+
+  #banda area_urbanizzata specchio_acqua
+#1     1              140              0
+#2     2              108             48
+#3     3              109             58
+
+#plot delle firme spettrali per creare un grafico con le variabili 
+p14<-ggplot(firme_spettrali, aes(x=banda)) + 
+geom_line(aes(y=area_urbanizzata, color="punto 1")) +
+geom_line(aes(y=specchio_acqua, color="punto 2")) +
+scale_color_manual(values=c("#E69F00", "#56B4E9"))+
+theme(legend.position="top")+
+labs(x="banda",y="riflettanza")
+p14
+
+#grafici uniti
+banda <- c(1,2,3)
+area_boscata<-c(189, 53, 73)
+area_seminaturale <- c(210, 97, 101)
+area_urbanizzata <- c(140, 108, 109) 
+specchio_acqua <- c(0, 48, 58)
+
+#creo la tab con le tre variabili
+firme_spettrali_temp<- data.frame(banda, area_boscata, area_seminaturale, area_urbanizzata, specchio_acqua)
+firme_spettrali_temp
+
+  #banda  area_boscata area_seminaturale area_urbanizzata specchio_acqua
+#1     1           189               210              140              0
+#2     2            53                97              108             48
+#3     3            73               101              109             58
+
+
+tot<- ggplot(firme_spettrali_temp, aes(x=banda)) +                                                                
+      geom_line(aes(y=area_boscata, linetype='solid', col="red"))+
+      geom_line(aes(y=area_seminaturale, linetype='solid'))+
+      geom_line(aes(y=area_urbanizzata, linetype="dotted", col="red"))+
+      geom_line(aes(y=specchio_acqua, linetype="dotted"))+
+      theme(legend.position="top")+
+      labs(x="banda",y="riflettanza")
+tot
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
