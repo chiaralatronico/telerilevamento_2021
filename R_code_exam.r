@@ -29,6 +29,29 @@ library(ggplot2)
 orlando_1986<-brick("orlando_tm5_1986108.jpg")
 orlando_2014<-brick("orlando_oli_2014137.jpg")
 
+#info orlando_1986
+#class      : RasterBrick 
+#dimensions : 480, 720, 345600, 3  (nrow, ncol, ncell, nlayers)
+#resolution : 1, 1  (x, y)
+#extent     : 0, 720, 0, 480  (xmin, xmax, ymin, ymax)
+#crs        : NA 
+#source     : D:/Magistrale/1_anno/2_semestre/Tge/esame/orlando_tm5_1986108.jpg 
+#names      : orlando_tm5_1986108.1, orlando_tm5_1986108.2, orlando_tm5_1986108.3 
+#min values :                     0,                     0,                     0 
+#max values :                   255,                   255,                   255
+
+#info orlando_2014
+#class      : RasterBrick 
+#dimensions : 480, 720, 345600, 3  (nrow, ncol, ncell, nlayers)
+#resolution : 1, 1  (x, y)
+#extent     : 0, 720, 0, 480  (xmin, xmax, ymin, ymax)
+#crs        : NA 
+#source     : D:/Magistrale/1_anno/2_semestre/Tge/esame/orlando_oli_2014137.jpg 
+#names      : orlando_oli_2014137.1, orlando_oli_2014137.2, orlando_oli_2014137.3 
+#min values :                     0,                     0,                     0 
+#max values :                   255,                   255,                   255 
+
+
 o86<-ggRGB(orlando_1986, r=1, g=2, b=3, stretch="lin")
 o14<-ggRGB(orlando_2014, r=1, g=2, b=3, stretch="lin")
 
@@ -130,8 +153,54 @@ G2<-g2 +scale_fill_manual(values=c("#5D8C2E", "#F3E2C2", "#6CCCE0"))+theme(legen
 #con la funzione grid.arrange stampo insieme i due grafici su una riga
 grid.arrange(G1, G2, nrow=1, top="Variazioni della copertura del suolo a Orlando nel 1986 e nel 2014")
 
+--------
 
+#per il calcolo della dev.standard si utilizza la "finestra mobile" (moving window) di un'estensione di tot.pixel x tot.pixel 
+#essa passa in una sola banda dell'immagine e calcola di volta in volta la dev.st. dei pixel dell'immagine a cui fa riferimento
+#per poterla usare posso calcolare l'ndvi dell'immagine in modo da creare un unico layer su cui calcolare la dev. st.
 
+#rinomino bande 1986
+nir86<-orlando_1986$orlando_tm5_1986108.1
+red86<-orlando_1986$orlando_tm5_1986108.2
 
+#ndvi 1986
+ndvi86<-(nir86-red86)/(nir86+red86)
+
+cln<-colorRampPalette(c('#893660','#E1E6B9','#375D3B'))(100)
+
+#rinomino bande 2014
+nir14<-orlando_2014$orlando_oli_2014137.1
+red14<-orlando_2014$orlando_oli_2014137.2
+
+#ndvi 2014
+ndvi14<-(nir14-red14)/(nir14+red14)
+
+par(mfrow=c(1,2))
+plot(ndvi86, col=cln)
+plot(ndvi14, col=cln)
+dev.off()
+
+diffndvi<-ndvi14-ndvi86
+plot(diffndvi, col=cln, main='Differenza di NDVI tra il 2014 e il 1986')
+#le zone con differenza di NDVI negativa, ovvero che hanno subito una maggiore perdita di vegetazione, sono in viola
+
+#con la funzione focal calcolo la dev. st. (sd) sull'ndvi con una finestra mobile di 5x5 pixel (w) 
+ndvisd89 <- focal(ndvi86, w=matrix(1/25, nrow=5, ncol=5), fun=sd)
+clsd <- colorRampPalette(c('royal blue','#9AC836','orange','yellow'))(100) 
+plot(ndvisd89, col=clsd)
+
+#calcolo la media (è la media della biomassa all'interno dell'immagine)
+ndvimean86 <- focal(ndvi86, w=matrix(1/9, nrow=3, ncol=3), fun=mean)
+clm <- colorRampPalette(c("#0A3A4A", "#196674", "#33A6B2", "#FEF9D1"))(100) 
+#plot della media
+plot(ndvimean86, col=clm)
+#l'ndvi medio calcolato 
+
+ndvimean14 <- focal(ndvi14, w=matrix(1/9, nrow=3, ncol=3), fun=mean)
+plot(ndvimean14, col=clm)
+
+par(mfrow=c(1,2))
+plot(ndvimean86, col=clm)
+plot(ndvimean14, col=clm)
 
 
