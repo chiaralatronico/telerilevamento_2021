@@ -157,7 +157,7 @@ G2<-g2 +scale_fill_manual(values=c("#5D8C2E", "#F3E2C2", "#6CCCE0"))+theme(legen
 #con la funzione grid.arrange stampo insieme i due grafici su una riga e assegno un titolo
 grid.arrange(G1, G2, nrow=1, top="Variazioni della copertura del suolo a Orlando nel 1986 e nel 2014")
 
---------------------
+#--------------------
 
 #2) firme spettrali
 
@@ -267,7 +267,7 @@ tot<- ggplot(firme_spettrali_temp, aes(x=banda)) +
       labs(x="banda",y="riflettanza")
 tot
 
---------------------
+#--------------------
 
 #3) calcolo dell'ndvi (per immagini a stessa risoluzione radiometrica come queste, si può calcolare il dvi)
 
