@@ -5,11 +5,11 @@
 #Fonti immagini: Nasa Earth Observatory
 
 #Sommario
-#1) classificazione per valori di riflettanza
-#2) firme spettrali
-#3) calcolo dell'ndvi
+#1) Classificazione delle immagini per valori di riflettanza
+#2) Plottaggio delle firme spettrali di punti caratteristici
+#3) Evoluzione dell'NDVI e della biomassa presente
 
-#1) classificazione per valori di riflettanza
+#1) Classificazione delle immagini per valori di riflettanza
 
 #specifico il percorso di salvataggio dati
 setwd("D:/Magistrale/1_anno/2_semestre/Tge/esame/")
@@ -159,7 +159,7 @@ grid.arrange(G1, G2, nrow=1, top="Variazioni della copertura del suolo a Orlando
 
 #--------------------
 
-#2) firme spettrali
+#2) Plottaggio delle firme spettrali di punti caratteristici
 
 #plot dell'immagine del 1986 (a falsi colori: se non specificato, le bande 1, 2 e 3 sono montate rispettivamente sulle componenti RGB) 
 plotRGB(orlando_1986)
@@ -269,7 +269,8 @@ tot
 
 #--------------------
 
-#3) calcolo dell'ndvi (per immagini a stessa risoluzione radiometrica come queste, si può calcolare il dvi)
+#3) Evoluzione dell'NDVI e della biomassa presente 
+#(per immagini a stessa risoluzione radiometrica (come queste) si può calcolare il DVI)
 
 #per il calcolo della dev.standard si utilizza la "finestra mobile" (moving window) di un'estensione di tot.pixel x tot.pixel 
 #essa passa in una sola banda dell'immagine e calcola di volta in volta la dev.st. dei pixel dell'immagine a cui fa riferimento
@@ -308,16 +309,24 @@ plot(diffndvi, col=cln, main='Differenza di NDVI tra il 2014 e il 1986')
 #i valori negativi mi indicano valori di ndvi maggiori nel 1986
 #quindi le zone con differenza di NDVI negativa hanno subito una maggiore perdita di vegetazione e sono in viola
 
-#con la funzione focal calcolo la media della biomassa sull'ndvi del 1986 con una finestra mobile di 5x5 pixel
-ndvimean86 <- focal(ndvi86, w=matrix(1/9, nrow=3, ncol=3), fun=mean)
+#con la funzione focal calcolo la variabilità sull'ndvi del 1986 con una finestra mobile di 5x5 pixel
+ndvisd86 <- focal(ndvi86, w=matrix(1/25, nrow=5, ncol=5), fun=sd)
 
-#calcolo la media della biomassa sull'ndvi del 2014 con una finestra mobile di 5x5 pixel
-ndvimean14 <- focal(ndvi14, w=matrix(1/9, nrow=3, ncol=3), fun=mean)
+#con la funzione focal calcolo la variabilità sull'ndvi del 2014 con una finestra mobile di 5x5 pixel
+ndvisd14 <- focal(ndvi14, w=matrix(1/25, nrow=5, ncol=5), fun=sd)
 
 #cambio palette di colori
 clm <- colorRampPalette(c("#0A3A4A", "#196674", "#33A6B2", "#FEF9D1"))(100) 
 
-#multiframe per un plot contemporaneo delle due medie
+#multiframe per un plot contemporaneo delle due deviazioni standard
 par(mfrow=c(1,2))
-plot(ndvimean86, col=clm)
-plot(ndvimean14, col=clm)
+plot(ndvisd86, col=clm)
+plot(ndvisd14, col=clm)
+
+
+
+
+
+
+
+
