@@ -7,7 +7,7 @@
 #Sommario
 #1) Classificazione delle immagini per valori di riflettanza
 #2) Plottaggio delle firme spettrali di punti caratteristici
-#3) Evoluzione dell'NDVI e della biomassa presente
+#3) Evoluzione dell'NDVI e della sua variabilità
 
 #1) Classificazione delle immagini per valori di riflettanza
 
@@ -269,12 +269,7 @@ tot
 
 #--------------------
 
-#3) Evoluzione dell'NDVI e della biomassa presente 
-#(per immagini a stessa risoluzione radiometrica (come queste) si può calcolare il DVI)
-
-#per il calcolo della dev.standard si utilizza la "finestra mobile" (moving window) di un'estensione di tot.pixel x tot.pixel 
-#essa passa in una sola banda dell'immagine e calcola di volta in volta la dev.st. dei pixel dell'immagine a cui fa riferimento
-#per poterla usare posso calcolare l'ndvi dell'immagine in modo da creare un unico layer su cui calcolare la dev. st.
+#3) Evoluzione dell'NDVI e della sua variabilità
 
 #rinomino le bande del NIR e del red dell'immagine del 1986
 nir86<-orlando_1986$orlando_tm5_1986108.1
@@ -316,12 +311,12 @@ ndvisd86 <- focal(ndvi86, w=matrix(1/25, nrow=5, ncol=5), fun=sd)
 ndvisd14 <- focal(ndvi14, w=matrix(1/25, nrow=5, ncol=5), fun=sd)
 
 #cambio palette di colori
-clm <- colorRampPalette(c("#0A3A4A", "#196674", "#33A6B2", "#FEF9D1"))(100) 
+clsd <- colorRampPalette(c("#0A3A4A", "#196674", "#33A6B2", "#FEF9D1"))(100) 
 
 #multiframe per un plot contemporaneo delle due deviazioni standard
 par(mfrow=c(1,2))
-plot(ndvisd86, col=clm)
-plot(ndvisd14, col=clm)
+plot(ndvisd86, col=clsd)
+plot(ndvisd14, col=clsd)
 
 
 
