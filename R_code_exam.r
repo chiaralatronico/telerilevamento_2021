@@ -311,17 +311,24 @@ ndvisd86 <- focal(ndvi86, w=matrix(1/25, nrow=5, ncol=5), fun=sd)
 ndvisd14 <- focal(ndvi14, w=matrix(1/25, nrow=5, ncol=5), fun=sd)
 
 #cambio palette di colori
-clsd <- colorRampPalette(c("#0A3A4A", "#196674", "#33A6B2", "#FEF9D1"))(100) 
+#clsd <- colorRampPalette(c("#0A3A4A", "#196674", "#33A6B2", "#FEF9D1"))(100) 
 
 #multiframe per un plot contemporaneo delle due deviazioni standard
-par(mfrow=c(1,2))
-plot(ndvisd86, col=clsd)
-plot(ndvisd14, col=clsd)
+#par(mfrow=c(1,2))
+#plot(ndvisd86, col=clsd)
+#plot(ndvisd14, col=clsd)
 
+p86<-ggplot() +
+geom_raster(ndvisd86, mapping = aes(x = x, y = y, fill = layer)) +
+scale_fill_viridis(option="inferno")  +
+ggtitle("Deviazione standard dell'NDVI nel 1986")
 
+p14<-ggplot() +
+geom_raster(ndvisd14, mapping = aes(x = x, y = y, fill = layer)) +
+scale_fill_viridis(option = "rocket")  +
+ggtitle("Standard deviation of NDVI by viridis colour scale")
 
-
-
+grid.arrange(p86, p14, nrow=1)
 
 
 
