@@ -2,7 +2,7 @@
 
 #Analisi telerilevata sullo svlippo di Orlando in Florida tra il 1986 e il 2014
 #Immagine del 1984 acquisita da Landsat 5; immagine del 2014 acquisita da Landsat 8
-#Fonti immagini: Nasa Earth Observatory
+#Fonte immagini: Nasa Earth Observatory
 
 #Sommario
 #1) Classificazione delle immagini per valori di riflettanza
@@ -19,9 +19,9 @@ setwd("D:/Magistrale/1_anno/2_semestre/Tge/esame/")
 #richiamo le librerie necessarie per le analisi 
 library(raster) 
 library(RStoolbox) 
-library(rasterVis) 
 library(gridExtra)
 library(ggplot2)
+library(viridis)
 
 #importo le immagini (ciascuna con tre bande) e le rinomino
 orlando_1986<-brick("orlando_tm5_1986108.jpg")
@@ -79,11 +79,8 @@ par(mfrow=c(1,2))
 plot(o86c$map, col=cl)
 plot(o14c$map, col=cl)
 
-#si notano le seguenti classi:
-#in chiaro le aree urbane/urbanizzate;
-#in celeste gli specchi d'acqua
-#in verde le aree vegetate
- 
+#si notano le seguenti classi: in chiaro le aree urbane/urbanizzate, in celeste gli specchi d'acqua, in verde le aree vegetate
+
 #con la funzione freq calcolo la frequenza (il numero) di pixel contenuti in ogni classe dell'immagine del 1986
 freq(o86c$map)    
      
@@ -142,7 +139,7 @@ percentuali
 
 #con la funzione ggplot faccio un grafico (a barre) per l'immagine orlando_1986
 #sull'asse delle x inserisco la voce copertura, mentre su quello delle y percent_1986
-#scelgo manualmente i colori da associare alle colonne del grafico
+#scelgo manualmente i colori da associare alle colonne del grafico e posiziono in alto la legenda
 g1 <-ggplot(percentuali, aes(x=copertura, y=percent_1986, fill=copertura)) +
      geom_bar(stat="identity", color="black")+
      geom_text(aes(label=percent_1986), vjust=-0.5, color="black", size=4.5)
@@ -164,7 +161,7 @@ grid.arrange(G1, G2, nrow=1, top="Variazioni della copertura del suolo a Orlando
 #plot dell'immagine del 1986 (a falsi colori: se non specificato, le bande 1, 2 e 3 sono montate rispettivamente sulle componenti RGB) 
 plotRGB(orlando_1986)
 
-#con la funzione click clicco su due punti signficativi sulla mappa per leggerne le i valori di riflettanza nelle tre bande
+#con la funzione click clicco su due punti signficativi sulla mappa per leggerne i valori di riflettanza nelle tre bande
 #ogni click viene contrassegnato da un punto giallo con relativo numero
 click(orlando_1986, id=T, xy=T, cell=T, type="p", pch=16, col="yellow")
 
@@ -178,14 +175,12 @@ click(orlando_1986, id=T, xy=T, cell=T, type="p", pch=16, col="yellow")
       #x      y   cell  orlando_tm5_1986108.1  orlando_tm5_1986108.2   orlando_tm5_1986108.3
 #1 659.5  107.5 268500                    210                     97                     101   
 
-
-#per avere una tabella riassuntiva dei valori di riflettanza, specifico le variabili: le tre bande e le due coperure 
-#definisco le variabili (banda, area boscata, area seminaturale)
+#definisco le variabili: le bande e le tipologie di copertura con i relativi valori di riflettanza
 banda <- c(1,2,3)
-area_boscata <- c(189, 53, 73) #inserisco i valori di riflettanza
-area_seminaturale <- c(210, 97, 101) #inserisco i valori di riflettanza
+area_boscata <- c(189, 53, 73) 
+area_seminaturale <- c(210, 97, 101) 
 
-#creo la tab con le tre variabili
+#creo la tabella con le tre variabili
 firme_spettrali <- data.frame(banda, area_boscata, area_seminaturale)
 firme_spettrali
 
@@ -194,7 +189,7 @@ firme_spettrali
 #2     2             53                 97
 #3     3             73                101
 
-#plot delle firme spettrali per creare un grafico lineare sui valori di riflettanza nelle tre bande dei due punti considerati
+#plot delle firme spettrali per creare un grafico lineare dei valori di riflettanza nelle tre bande dei due punti considerati
 p86<-ggplot(firme_spettrali, aes(x=banda)) + 
 geom_line(aes(y=area_boscata, color="punto 1")) +
 geom_line(aes(y=area_seminaturale, color="punto 2")) +
@@ -208,7 +203,7 @@ p86
 plotRGB(orlando_2014)
 
 #scelgo gli stessi punti individuati sull'immagine del 1986
-#punto 1: area boscata (1986) ora diventata area uranizzata (2014)
+#punto 1: area boscata (1986) ora diventata area urbanizzata (2014)
 #punto 2: area seminaturale (1986) ora diventata lago artificiale (2014)
 
 click(orlando_2014, id=T, xy=T, cell=T, type="p", pch=16, col="yellow")
@@ -218,10 +213,10 @@ click(orlando_2014, id=T, xy=T, cell=T, type="p", pch=16, col="yellow")
       #x     y   cell  orlando_oli_2014137.1  orlando_oli_2014137.2  orlando_oli_2014137.3
 #1 659.5 107.5 268500                      0                     48                     58  #specchio d'acqua
                                            
-#definisco le nuove variabili (banda, area urbanizzata, specchio d'acqua)
+#definisco le nuove variabili (banda, area urbanizzata, specchio d'acqua) e i valori di riflettanza
 banda <- c(1,2,3)
-area_urbanizzata <- c(140, 108, 109) #inserisco i valori di riflettanza
-specchio_acqua <- c(0, 48, 58)  #inserisco i valori di riflettanza
+area_urbanizzata <- c(140, 108, 109) 
+specchio_acqua <- c(0, 48, 58)  
 
 #creo la tab con le tre variabili
 firme_spettrali14<- data.frame(banda, area_urbanizzata, specchio_acqua)
@@ -232,7 +227,7 @@ firme_spettrali14
 #2     2              108             48
 #3     3              109             58
 
-#plot delle firme spettrali per creare un grafico lineare sui nuovi valori di riflettanza dei soliti due punti considerati
+#plot delle firme spettrali per creare un grafico lineare sui nuovi valori di riflettanza dei due punti considerati
 p14<-ggplot(firme_spettrali, aes(x=banda)) + 
 geom_line(aes(y=area_urbanizzata, color="punto 1")) +
 geom_line(aes(y=specchio_acqua, color="punto 2")) +
@@ -288,7 +283,7 @@ ndvi14<-(nir14-red14)/(nir14+red14)
 #definisco una palette di colori
 cln<-colorRampPalette(c('#893660','#E1E6B9','#375D3B'))(100)
 
-#multiframe per plottare i due ndvi contemporaneamente 
+#multiframe per plottare insieme i due ndvi 
 par(mfrow=c(1,2))
 plot(ndvi86, col=cln)
 plot(ndvi14, col=cln)
@@ -297,7 +292,7 @@ dev.off()
 #calcolo la differenza tra i due indici 
 diffndvi<-ndvi14-ndvi86
 
-#plot della differenza
+#plot della differenza di ndvi
 plot(diffndvi, col=cln, main='Differenza di NDVI tra il 2014 e il 1986')
 
 #i valori positivi mi indicano valori di ndvi maggiori nel 2014
@@ -318,16 +313,19 @@ ndvisd14 <- focal(ndvi14, w=matrix(1/25, nrow=5, ncol=5), fun=sd)
 #plot(ndvisd86, col=clsd)
 #plot(ndvisd14, col=clsd)
 
+#plot dell'indice ndvisd86 utilizzando le viridis color scales (in particolare la palette "inferno")
 p86<-ggplot() +
 geom_raster(ndvisd86, mapping = aes(x = x, y = y, fill = layer)) +
 scale_fill_viridis(option="inferno")  +
 ggtitle("Deviazione standard dell'NDVI nel 1986")
 
+#plot dell'indice ndvisd14 utilizzando le viridis color scales (in particolare la palette "inferno")
 p14<-ggplot() +
 geom_raster(ndvisd14, mapping = aes(x = x, y = y, fill = layer)) +
 scale_fill_viridis(option = "rocket")  +
 ggtitle("Standard deviation of NDVI by viridis colour scale")
 
+#plot delle mappe su un'unica riga 
 grid.arrange(p86, p14, nrow=1)
 
 
