@@ -6,8 +6,8 @@
 
 #Sommario
 #1) Classificazione delle immagini per valori di riflettanza
-#2) Plottaggio delle firme spettrali di punti caratteristici
-#3) Evoluzione dell'NDVI e della sua variabilità
+#2) Le firme spettrali di punti caratteristici
+#3) Evoluzione dell'NDVI e la sua variabilità
 
 #1) Classificazione delle immagini per valori di riflettanza
 
@@ -61,7 +61,7 @@ o86<-ggRGB(orlando_1986, r=1, g=2, b=3, stretch="lin")
 o14<-ggRGB(orlando_2014, r=1, g=2, b=3, stretch="lin")
 
 #metto insieme i plot su una sola riga e assegno un titolo
-grid.arrange(o86, o14, nrow=1, top="Sviluppo di Orlando dal 1986 al 2014")
+grid.arrange(o86, o14, nrow=1)
 
 #si nota prevalentemente l'acqua in nero, la vegetazione in tonalità di rosso e l'urbano in toanlità di grigio
 
@@ -264,7 +264,7 @@ tot
 
 #--------------------
 
-#3) Evoluzione dell'NDVI e della sua variabilità
+#3) Evoluzione dell'NDVI e la sua variabilità
 
 #rinomino le bande del NIR e del red dell'immagine del 1986
 nir86<-orlando_1986$orlando_tm5_1986108.1
